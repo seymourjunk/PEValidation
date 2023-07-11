@@ -9,6 +9,5 @@ def parse_pe_file():
     pe_file.print_all_structures()
 
 
-
 if __name__ == '__main__':
     parse_pe_file()
