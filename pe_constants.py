@@ -37,7 +37,7 @@ class IMAGE_DATA_DIRECTORY(ctypes.Structure):
     ]
 
 # https://learn.microsoft.com/en-us/windows/win32/debug/pe-format
-class IMAGE_FILE_HEADER(ctypes.Structure): # 20(?) bytes
+class IMAGE_FILE_HEADER(ctypes.Structure): # 20 bytes
     _fields_ = [
         ("Machine",                 WORD),   # The number that identifies the type of target machine
         ("NumberOfSections",        WORD),
@@ -80,12 +80,12 @@ class IMAGE_OPTIONAL_HEADER(ctypes.Structure): #
         ("SizeOfHeapCommit",            DWORD),
         ("LoaderFlags",                 DWORD),
         ("NumberOfRvaAndSizes",         DWORD),
-        ("DataDirectory",               IMAGE_DATA_DIRECTORY * 16)
+        #("DataDirectory",               IMAGE_DATA_DIRECTORY * 16)
     ]
 
-class IMAGE_NT_HEADERS(ctypes.Structure):
-    _fields_ = [
-        ("Signature",       DWORD),
+class IMAGE_NT_HEADERS(ctypes.Structure):   # 248 bytes
+    _fields_ = [ 
+        ("Signature",       CHAR * 4),
         ("FileHeader",      IMAGE_FILE_HEADER),
         ("OptionalHeader",  IMAGE_OPTIONAL_HEADER) 
     ]
