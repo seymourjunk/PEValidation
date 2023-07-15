@@ -48,7 +48,7 @@ class IMAGE_FILE_HEADER(ctypes.Structure): # 20 bytes
         ("Characteristics",         WORD)
     ]
 
-class IMAGE_OPTIONAL_HEADER(ctypes.Structure): # 
+class IMAGE_OPTIONAL_HEADER(ctypes.Structure): # 224 bytes, the size isn't fixed > look at "SizeOfOptionalHeader" in IMAGE_FILE_HEADER
     _fields_ = [
         ("Magic",                       WORD),  # PE32 or PE32+
         ("MajorLinkerVersion",          BYTE),
@@ -97,9 +97,9 @@ class Misc(ctypes.Union):
     ]
 
 
-class IMAGE_SECTION_HEADER(ctypes.Structure):
+class IMAGE_SECTION_HEADER(ctypes.Structure):   #40 bytes
     _fields_ = [
-        ("Name",                    BYTE * 8),
+        ("Name",                    CHAR * 8),
         ("Misc",                    Misc),
         ("VirtualAddress",          DWORD),
         ("SizeOfRawData",           DWORD),
