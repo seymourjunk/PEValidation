@@ -1,4 +1,11 @@
+import logging
 import pe_constants as const
+
+logging.basicConfig(filename='log.txt', 
+                    filemode='w', 
+                    encoding='utf-8',
+                    format='%(levelname)s: %(message)s', 
+                    level=logging.DEBUG)
 
 class PE_Builder:
     def __init__(self, _bytearray_file):
@@ -57,15 +64,17 @@ class PE_Builder:
         self.print_structure(self.image_dos_header)
         self.print_structure(self.image_file_header)
         self.print_structure(self.image_optional_header)
-        self.print_structure(self.image_section_header)
+        #self.print_structure(self.image_section_header)
 
     def validate_pe_file(self):
         if self.image_dos_header.e_magic == b'MZ':
-            print("CORRECT: e_magic is 'MZ'")
+            logging.info("CORRECT: e_magic is 'MZ'")
         else:
+            logging.error(f"FAIL: e_magic isn't 'MZ' but {self.image_dos_header.e_magic}")
             raise ValueError(f"FAIL: e_magic isn't 'MZ' but {self.image_dos_header.e_magic}")
         
         if self.NT_image_header.Signature == b'PE':
-            print("CORRECT: signature is 'PE'")
+            logging.info("CORRECT: signature is 'PE'")
         else:
-            raise ValueError(f"FAIL: sirnature isn't 'PE' but {self.NT_image_header.Signature}")
+            logging.error(f"FAIL: signature isn't 'PE' but {self.NT_image_header.Signature}")
+            raise ValueError(f"FAIL: signature isn't 'PE' but {self.NT_image_header.Signature}")
