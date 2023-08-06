@@ -1,11 +1,6 @@
 import logging
+import helper
 import pe_constants as const
-
-logging.basicConfig(filename='log.txt', 
-                    filemode='w', 
-                    encoding='utf-8',
-                    format='%(levelname)s: %(message)s', 
-                    level=logging.DEBUG)
 
 class PE_Builder:
     def __init__(self, _bytearray_file):
@@ -51,19 +46,10 @@ class PE_Builder:
         self.NT_image_header = self.get_NT_image_header()
         self.image_section_header = self.get_image_section_header()
 
-    def print_structure(self, structure):
-        print(f"===== {structure.__class__.__name__} =====")
-        for item in structure._fields_:
-            item_value = structure.__getattribute__(item[0])
-            dec_value = item_value if isinstance(item_value, int) else [i for i in item_value]
-            hex_value = hex(item_value) if isinstance(item_value, int) else [hex(i) for i in item_value]
-            print(f"[*] {item[0]}: {dec_value}, {hex_value}") # TODO: rjust() 
-        print('')
-
     def print_all_structures(self):
-        self.print_structure(self.image_dos_header)
-        self.print_structure(self.image_file_header)
-        self.print_structure(self.image_optional_header)
+        helper.print_structure(self.image_dos_header)
+        helper.print_structure(self.image_file_header)
+        helper.print_structure(self.image_optional_header)
         #self.print_structure(self.image_section_header)
 
     def validate_pe_file(self):
