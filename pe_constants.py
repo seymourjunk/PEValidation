@@ -30,6 +30,12 @@ class IMAGE_DOS_HEADER(ctypes.Structure): # 64 bytes
         ("e_lfanew",    LONG),      # file address of new exe header
     ]
 
+DIRECTORY_ENTRIES = ["IMAGE_DIRECTORY_ENTRY_EXPORT", "IMAGE_DIRECTORY_ENTRY_IMPORT", "IMAGE_DIRECTORY_ENTRY_RESOURCE", 
+                     "IMAGE_DIRECTORY_ENTRY_EXCEPTION", "IMAGE_DIRECTORY_ENTRY_SECURITY", "IMAGE_DIRECTORY_ENTRY_BASERELOC", 
+                     "IMAGE_DIRECTORY_ENTRY_DEBUG", "IMAGE_DIRECTORY_ENTRY_COPYRIGHT", "IMAGE_DIRECTORY_ENTRY_ARCHITECTURE", 
+                     "IMAGE_DIRECTORY_ENTRY_GLOBALPTR", "IMAGE_DIRECTORY_ENTRY_TLS", "IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG", 
+                     "IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT", "IMAGE_DIRECTORY_ENTRY_IAT", "IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT", "IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR"]
+
 class IMAGE_DATA_DIRECTORY(ctypes.Structure):
     _fields_ = [
         ("VirtualAddress",  DWORD),
@@ -80,7 +86,7 @@ class IMAGE_OPTIONAL_HEADER(ctypes.Structure): # 224 bytes, the size isn't fixed
         ("SizeOfHeapCommit",            DWORD),
         ("LoaderFlags",                 DWORD),
         ("NumberOfRvaAndSizes",         DWORD),
-        #("DataDirectory",               IMAGE_DATA_DIRECTORY * 16)
+        ("DataDirectory",               IMAGE_DATA_DIRECTORY * 16)
     ]
 
 class IMAGE_NT_HEADERS(ctypes.Structure):   # 248 bytes
@@ -93,7 +99,7 @@ class IMAGE_NT_HEADERS(ctypes.Structure):   # 248 bytes
 class Misc(ctypes.Union):
     _fields_ = [
         ("PhysicalAddress", DWORD),
-        ("VirtualSize",     DWORD)
+        ("VirtualSize",     DWORD)  #for exe
     ]
 
 

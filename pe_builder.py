@@ -2,6 +2,7 @@ import logging
 import helper
 import pe_constants as const
 
+
 class PE_Builder:
     def __init__(self, _bytearray_file):
         self.bytearray_file = _bytearray_file
@@ -16,7 +17,6 @@ class PE_Builder:
         self.image_section_header = []
         self.fill_pe_structure_with_headers()
 
-        
     def get_image_dos_header(self):
         return const.IMAGE_DOS_HEADER.from_buffer_copy(self.bytearray_file[:64])
     
@@ -29,7 +29,7 @@ class PE_Builder:
         self.sections_count = self.image_file_header.NumberOfSections
         return const.IMAGE_NT_HEADERS.from_buffer_copy(self.bytearray_file[self.PE_signature_address:self.PE_signature_address+248])
 
-    def get_image_file_header(self): #TODO: check for correct values
+    def get_image_file_header(self):
         return const.IMAGE_FILE_HEADER.from_buffer_copy(self.bytearray_file[65:])
 
     def get_image_section_header(self):
@@ -44,13 +44,13 @@ class PE_Builder:
     def fill_pe_structure_with_headers(self):
         self.image_dos_header = self.get_image_dos_header()
         self.NT_image_header = self.get_NT_image_header()
-        self.image_section_header = self.get_image_section_header()
+        self.get_image_section_header()
 
     def print_all_structures(self):
-        helper.print_structure(self.image_dos_header)
-        helper.print_structure(self.image_file_header)
-        helper.print_structure(self.image_optional_header)
-        #self.print_structure(self.image_section_header)
+        helper.common_print(self.image_dos_header)
+        helper.common_print(self.image_file_header)
+        helper.common_print(self.image_optional_header)
+        helper.iterate_print(self.image_section_header)
 
     def validate_pe_file(self):
         if self.image_dos_header.e_magic == b'MZ':
